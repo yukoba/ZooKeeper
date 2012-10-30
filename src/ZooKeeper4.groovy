@@ -1,4 +1,4 @@
-import groovy.transform.TypeChecked
+import groovy.transform.CompileStatic
 
 import java.awt.Rectangle
 import java.awt.Robot
@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage
 // http://yahoo-mbga.jp/game/12002369/play
 // Firefox で7ホイールスクロール必要
 
-@TypeChecked
+@CompileStatic
 class ZooKeeper4 {
     static Map hash2type = [:]
     static Robot robot = new Robot()
@@ -169,6 +169,7 @@ class ZooKeeper4 {
     }
 
     static int toScreenX(int x) { x * 34 + 445 }
+
     static int toScreenY(int y) { y * 34 + 222 }
 
     static void moveMouse(int x, int y, int dx, int dy) {
