@@ -63,7 +63,7 @@ class ZooKeeper4 {
         for (int y in 0..7) {
             for (int x in 0..7) {
 //            BufferedImage biSub = bi.getSubimage(x * 34, y * 34, 32, 32)
-//            ImageIO.write(biSub, "png", new File("../tmp/sub_${x}_${y}.png"))
+//            ImageIO.write(biSub, "png", new File("tmp/sub_${x}_${y}.png"))
                 map[x][y] = (hash2type[hashCode(bi, x * 34, y * 34, 32, 32)] ?: 0) as int
             }
         }
@@ -79,17 +79,17 @@ class ZooKeeper4 {
 
         int sum = 0
         rgbs.each { int rgb ->
-            rgb &= 0xFFFFFF;
+            rgb &= 0xFFFFFF
             int r = (rgb >> 16) & 0xFF
             int g = (rgb >> 8) & 0xFF
             int b = (rgb >> 0) & 0xFF
             if (r >= 245 && g >= 245 && b >= 192) {
-                rgb = 0xFFFFFF;
+                rgb = 0xFFFFFF
             }
             sum += rgb
         }
 //    println "${x / 34} ${y / 34} ${sum}"
-        return sum;
+        return sum
     }
 
     static boolean isValid(int x) { x >= 0 && x <= 7 }
