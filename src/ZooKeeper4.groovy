@@ -10,8 +10,8 @@ import java.awt.image.BufferedImage
 
 @CompileStatic
 class ZooKeeper4 {
-    static Map hash2type = [:]
-    static Robot robot = new Robot()
+    static final Map hash2type = [:]
+    static final Robot robot = new Robot()
     static int imgNo = 0
     static BufferedImage bi
     static final int COUNTER_ANIMAL = -1
@@ -50,8 +50,8 @@ class ZooKeeper4 {
     }
 
     static void printMap(int[][] map) {
-        for (int y in 0..7) {
-            for (int x in 0..7) {
+        for (int y = 0; y < 8; y++) {
+            for (int x = 0; x < 8; x++) {
                 print map[x][y]
             }
             println()
@@ -60,8 +60,8 @@ class ZooKeeper4 {
 
     static int[][] toMap(Map hash2type, BufferedImage bi) {
         int[][] map = new int[8][8]
-        for (int y in 0..7) {
-            for (int x in 0..7) {
+        for (int y = 0; y < 8; y++) {
+            for (int x = 0; x < 8; x++) {
 //            BufferedImage biSub = bi.getSubimage(x * 34, y * 34, 32, 32)
 //            ImageIO.write(biSub, "png", new File("tmp/sub_${x}_${y}.png"))
                 map[x][y] = (hash2type[hashCode(bi, x * 34, y * 34, 32, 32)] ?: 0) as int
@@ -78,7 +78,7 @@ class ZooKeeper4 {
         }
 
         int sum = 0
-        rgbs.each { int rgb ->
+        for (int rgb in rgbs) {
             rgb &= 0xFFFFFF
             int r = (rgb >> 16) & 0xFF
             int g = (rgb >> 8) & 0xFF
@@ -96,8 +96,8 @@ class ZooKeeper4 {
 
     static void doAction(int[][] map) {
         boolean isFound = false
-        for (int y in 0..7) {
-            for (int x in 0..7) {
+        for (int y = 0; y < 8; y++) {
+            for (int x = 0; x < 8; x++) {
                 int target = map[x][y]
                 if (target == 0) continue
 
@@ -106,14 +106,14 @@ class ZooKeeper4 {
                 }
 
                 // 端を移動してそろうパターン
-                for (int d in 0..3) {
+                for (int d = 0; d < 4; d++) {
                     int dx = [0, 1, 0, -1][d]
                     int dy = [-1, 0, 1, 0][d]
                     int x2 = x + dx
                     int y2 = y + dy
 
                     if (isValid(x2) && isValid(y2) && map[x2][y2] == target) {
-                        for (int d2 in 0..3) {
+                        for (int d2 = 0; d2 < 4; d2++) {
                             int d2x = [0, 1, 0, -1][d2]
                             int d2y = [-1, 0, 1, 0][d2]
                             int x3 = x2 + dx + d2x
@@ -131,7 +131,7 @@ class ZooKeeper4 {
                 }
 
                 // 真ん中を移動してそろうパターン
-                for (int d in 0..3) {
+                for (int d = 0; d < 4; d++) {
                     int dx = [0, 1, 0, -1][d]
                     int dy = [-1, 0, 1, 0][d]
                     int x2 = x + dx * 2
@@ -141,7 +141,7 @@ class ZooKeeper4 {
                         int xm = x + dx
                         int ym = y + dy
 
-                        for (int d2 in 0..3) {
+                        for (int d2 = 0; d2 < 4; d2++) {
                             int d2x = [0, 1, 0, -1][d2]
                             int d2y = [-1, 0, 1, 0][d2]
                             int x3 = xm + d2x
@@ -169,7 +169,6 @@ class ZooKeeper4 {
     }
 
     static int toScreenX(int x) { x * 34 + 445 }
-
     static int toScreenY(int y) { y * 34 + 222 }
 
     static void moveMouse(int x, int y, int dx, int dy) {
