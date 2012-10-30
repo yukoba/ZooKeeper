@@ -1,5 +1,5 @@
-import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
+import javax.imageio.ImageIO
 
 Map hash2type = [:]
 hash2type[64] = 1
@@ -17,21 +17,21 @@ hash2type[56] = 6
 
 int[][] map = new int[8][8]
 (0..7).each { int y ->
-	(0..7).each { int x ->
-		BufferedImage biSub = ImageIO.read(new File("../tmp/zookeeper/${y}_${x}.png"))
+    (0..7).each { int x ->
+        BufferedImage biSub = ImageIO.read(new File("../tmp/zookeeper/${y}_${x}.png"))
         def hash = Math.abs(hashCode(biSub)) % 100
         def type = hash2type[hash]
         print (type ?: 0) + " "
         map[x][y] = (type ?: 0)
-	}
-	println ""
+    }
+    println ""
 }
 
 int hashCode(BufferedImage bi) {
-	int[] rgbs = bi.getRGB(0, 0, bi.width, bi.height, null, 0, bi.width);
-	int sum = 0;
-	rgbs.each { sum += it; }
-	return sum;
+    int[] rgbs = bi.getRGB(0, 0, bi.width, bi.height, null, 0, bi.width);
+    int sum = 0;
+    rgbs.each { sum += it; }
+    return sum;
 }
 
 boolean isValid(x) { x >= 0 && x <= 7 }
