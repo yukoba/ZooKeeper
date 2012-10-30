@@ -1,6 +1,7 @@
-import java.awt.*
-import javax.imageio.ImageIO
+import java.awt.Rectangle
+import java.awt.Robot
 import java.awt.image.BufferedImage
+import javax.imageio.ImageIO
 
 Robot robot = new Robot()
 BufferedImage bi = robot.createScreenCapture(new Rectangle(445, 222, 270, 270))
@@ -13,13 +14,13 @@ ImageIO.write(bi, "png", new File("../tmp/test.png"))
 
 int[][] map = new int[8][8]
 (0..7).each { int y ->
-	(0..7).each { int x ->
+    (0..7).each { int x ->
         BufferedImage biSub = bi.getSubimage(x * 34, y * 34, 32, 32)
-		map[x][y] = biSub.hashCode()
-		print map[x][y] + " "
-		ImageIO.write(biSub, "png", new File("../tmp/zookeeper/${y}_${x}.png"))
-	}
-	println ""
+        map[x][y] = biSub.hashCode()
+        print map[x][y] + " "
+        ImageIO.write(biSub, "png", new File("../tmp/zookeeper/${y}_${x}.png"))
+    }
+    println ""
 }
 
 //new File("../tmp/result.txt").text = map
