@@ -1,9 +1,9 @@
+import groovy.transform.TypeChecked
+
+import java.awt.Rectangle
 import java.awt.Robot
 import java.awt.event.InputEvent
 import java.awt.image.BufferedImage
-import javax.imageio.ImageIO
-import java.awt.Rectangle
-import groovy.transform.TypeChecked
 
 // http://yahoo-mbga.jp/game/12002369/play
 // Firefox で7ホイールスクロール必要
@@ -12,9 +12,9 @@ import groovy.transform.TypeChecked
 class ZooKeeper4 {
     static Map hash2type = [:]
     static Robot robot = new Robot()
-    static int imgNo = 0;
-    static BufferedImage bi;
-    static final int COUNTER_ANIMAL = -1;
+    static int imgNo = 0
+    static BufferedImage bi
+    static final int COUNTER_ANIMAL = -1
 
     static void main(String[] args) {
         initHashType()
