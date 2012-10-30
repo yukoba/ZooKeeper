@@ -2,27 +2,25 @@ import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 
 Map hash2type = [:]
-hash2type[64] = 1
-hash2type[4] = 1
-hash2type[80] = 2
-hash2type[32] = 2
-hash2type[92] = 3
-hash2type[18] = 3
-hash2type[19] = 4
-hash2type[9] = 4
-hash2type[73] = 5
-hash2type[37] = 5
-hash2type[8] = 6
-hash2type[56] = 6
+hash2type[-1105833264] = 1
+hash2type[-1073523304] = 1
+hash2type[-1870107180] = 2
+hash2type[-1892344432] = 2
+hash2type[1219501592] = 3
+hash2type[1243028218] = 3
+hash2type[1188725419] = 4
+hash2type[-2129685109] = 4
+hash2type[1685273973] = 5
+hash2type[1680095637] = 5
+hash2type[-712314208] = 6
+hash2type[-705586956] = 6
 
 int[][] map = new int[8][8]
 (0..7).each { int y ->
     (0..7).each { int x ->
         BufferedImage biSub = ImageIO.read(new File("../tmp/zookeeper/${y}_${x}.png"))
-        def hash = Math.abs(hashCode(biSub)) % 100
-        def type = hash2type[hash]
-        print (type ?: 0) + " "
-        map[x][y] = (type ?: 0)
+        map[x][y] = hash2type[hashCode(biSub)] ?: 0
+        print "${map[x][y]} "
     }
     println ""
 }
