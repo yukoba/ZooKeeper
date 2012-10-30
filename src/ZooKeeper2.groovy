@@ -28,9 +28,9 @@ int[][] map = new int[8][8]
 }
 
 int hashCode(BufferedImage bi) {
-    int[] rgbs = bi.getRGB(0, 0, bi.width, bi.height, null, 0, bi.width);
-    int sum = 0;
-    rgbs.each { sum += it; }
+    int[] rgbs = bi.getRGB(0, 0, bi.width, bi.height, null, 0, bi.width)
+    int sum = 0
+    rgbs.each { sum += it }
     return sum;
 }
 
@@ -39,7 +39,7 @@ boolean isValid(x) { x >= 0 && x <= 7 }
 (0..7).each { int y ->
     (0..7).each { int x ->
         int target = map[x][y]
-        if (target == 0) return;
+        if (target == 0) return
 
         (0..3).each { int d ->
             int dx = [0, 1, 0, -1][d]

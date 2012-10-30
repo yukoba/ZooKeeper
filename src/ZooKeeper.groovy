@@ -11,7 +11,6 @@ ImageIO.write(bi, "png", new File("../tmp/test.png"))
 //def biSub = bi.getSubimage(x * 34, y * 34, 32, 32);
 //ImageIO.write(biSub, "png", new File("../tmp/test2.png"))
 
-
 int[][] map = new int[8][8]
 (0..7).each { int y ->
     (0..7).each { int x ->
