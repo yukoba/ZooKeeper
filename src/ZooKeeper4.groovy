@@ -14,6 +14,7 @@ class ZooKeeper4 {
     static Robot robot = new Robot()
     static int imgNo = 0;
     static BufferedImage bi;
+    static final int COUNTER_ANIMAL = -1;
 
     static void main(String[] args) {
         initHashType()
@@ -45,6 +46,7 @@ class ZooKeeper4 {
         hash2type[1296975626] = 6
         hash2type[-1839787472] = 7 // かば
         hash2type[-1838230220] = 7
+        hash2type[COUNTER_ANIMAL] = 8 // ぐるぐる回ってるやつ
     }
 
     static void printMap(int[][] map) {
@@ -70,6 +72,11 @@ class ZooKeeper4 {
 
     static int hashCode(BufferedImage bi, int x, int y, int w, int h) {
         int[] rgbs = bi.getRGB(x, y, w, h, null, 0, w)
+
+        if ((rgbs[w * 4 + 4] & 0xFFFFFF) == 0x00D87F) {
+            return COUNTER_ANIMAL
+        }
+
         int sum = 0
         rgbs.each { int rgb ->
             rgb &= 0xFFFFFF;
@@ -94,6 +101,11 @@ class ZooKeeper4 {
                 int target = map[x][y]
                 if (target == 0) continue
 
+                if (target == 8) {
+                    clickCounterAnimal(x, y)
+                }
+
+                // 端を移動してそろうパターン
                 for (int d in 0..3) {
                     int dx = [0, 1, 0, -1][d]
                     int dy = [-1, 0, 1, 0][d]
@@ -107,10 +119,39 @@ class ZooKeeper4 {
                             int x3 = x2 + dx + d2x
                             int y3 = y2 + dy + d2y
 
-                            if (isValid(x3) && isValid(y3) && (x2 != x3 || y2 != y3) && map[x3][y3] == target) {
+                            if ((x2 != x3 || y2 != y3) && isValid(x3) && isValid(y3) && map[x3][y3] == target) {
 //                            printMap(map)
 //                            println "Found: ($x, $y) ($x2, $y2) ($x3, $y3)"
                                 moveMouse(x2 + dx, y2 + dy, d2x, d2y)
+                                isFound = true
+                                // return
+                            }
+                        }
+                    }
+                }
+
+                // 真ん中を移動してそろうパターン
+                for (int d in 0..3) {
+                    int dx = [0, 2, 0, -2][d]
+                    int dy = [-2, 0, 2, 0][d]
+                    int x2 = x + dx
+                    int y2 = y + dy
+
+                    if (isValid(x2) && isValid(y2) && map[x2][y2] == target) {
+                        int xm = (int)(x + x2) / 2
+                        int ym = (int)(y + y2) / 2
+
+                        for (int d2 in 0..3) {
+                            int d2x = [0, 1, 0, -1][d2]
+                            int d2y = [-1, 0, 1, 0][d2]
+                            int x3 = xm + d2x
+                            int y3 = ym + d2y
+
+                            if ((x2 != x3 || y2 != y3) && (x != x3 || y != y3) &&
+                                    isValid(x3) && isValid(y3) && map[x3][y3] == target) {
+//                            printMap(map)
+//                            println "Found: ($x, $y) ($x2, $y2) ($x3, $y3)"
+                                moveMouse(xm, ym, d2x, d2y)
                                 isFound = true
                                 // return
                             }
@@ -136,6 +177,15 @@ class ZooKeeper4 {
         robot.mousePress(InputEvent.BUTTON1_MASK)
         Thread.sleep(50)
         robot.mouseMove(toScreenX(x) + 16, toScreenY(y) + 16)
+        Thread.sleep(50)
+        robot.mouseRelease(InputEvent.BUTTON1_MASK)
+        Thread.sleep(50)
+    }
+
+    static void clickCounterAnimal(int x, int y) {
+        robot.mouseMove(toScreenX(x) + 16, toScreenY(y) + 16)
+        Thread.sleep(50)
+        robot.mousePress(InputEvent.BUTTON1_MASK)
         Thread.sleep(50)
         robot.mouseRelease(InputEvent.BUTTON1_MASK)
         Thread.sleep(50)
