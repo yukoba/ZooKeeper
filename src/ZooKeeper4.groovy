@@ -132,14 +132,14 @@ class ZooKeeper4 {
 
                 // 真ん中を移動してそろうパターン
                 for (int d in 0..3) {
-                    int dx = [0, 2, 0, -2][d]
-                    int dy = [-2, 0, 2, 0][d]
-                    int x2 = x + dx
-                    int y2 = y + dy
+                    int dx = [0, 1, 0, -1][d]
+                    int dy = [-1, 0, 1, 0][d]
+                    int x2 = x + dx * 2
+                    int y2 = y + dy * 2
 
                     if (isValid(x2) && isValid(y2) && map[x2][y2] == target) {
-                        int xm = (int)(x + x2) / 2
-                        int ym = (int)(y + y2) / 2
+                        int xm = x + dx
+                        int ym = y + dy
 
                         for (int d2 in 0..3) {
                             int d2x = [0, 1, 0, -1][d2]
